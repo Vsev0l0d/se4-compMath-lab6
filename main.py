@@ -21,11 +21,17 @@ if __name__ == '__main__':
     x0, x_last = float_interval_choice()
     y0 = number_input(f'Введите y({x0}): ')
     h = number_input('Введите h: ')
+    eps = number_input('Введите eps: ')
 
     for solve, name in methods:
         try:
             print(f'\n{name}: ')
-            xValues, yValues = solve(x0, y0, h, x_last, f)
+            xValues, yValues = solve(x0, y0, h, x_last, f, solution, eps, log=True)
+
+            X2h, Y2h = solve(x0, y0, h * 2, x_last, f, solution, eps)
+            R = (yValues[2] - Y2h[2]) / (2 ** 4 - 1)
+            print(f'Оценка точности по правилу Рунге: R = {R}')
+
             graph([xValues, yValues], solution, name)
         except Exception as e:
             print(e)

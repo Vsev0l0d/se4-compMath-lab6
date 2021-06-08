@@ -28,9 +28,11 @@ if __name__ == '__main__':
             print(f'\n{name}: ')
             xValues, yValues = solve(x0, y0, h, x_last, f, solution, eps, log=True)
 
-            X2h, Y2h = solve(x0, y0, h * 2, x_last, f, solution, eps)
-            R = (yValues[2] - Y2h[2]) / (2 ** 4 - 1)
-            print(f'Оценка точности по правилу Рунге: R = {R}')
+            X2h, Y2h = solve(x0, y0, h / 2, x_last, f, solution, eps)
+            R = []
+            for i in range(len(yValues)):
+                R.append((yValues[i] - Y2h[i * 2]) / (2 ** 4 - 1))
+            print(f'Оценки точности по правилу Рунге:\n{R}')
 
             graph([xValues, yValues], solution, name)
         except Exception as e:

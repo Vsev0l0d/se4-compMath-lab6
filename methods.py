@@ -26,14 +26,14 @@ def rungeKutte(x0, y0, h, x_last, f, solution, eps=None, log=False):
 
 
 def milne(x0, y0, h, x_last, func, solution, eps, log=False):
-    if x0 + 3 * h > x_last:
+    if round(x0 + 3 * h, 5) > x_last:
         raise Exception("Необходимо от 4 значений x")
     xValues, yValues = rungeKutte(x0, y0, h, round(x0 + 3 * h, 5), func, solution, log=log)
     calculation_table = []
     f = []
     for i in range(1, 4):
         f.append(func(xValues[i], yValues[i]))
-    x = xValues[-1] + h
+    x = round(xValues[-1] + h, 5)
     i = 5
 
     while x <= x_last:
@@ -51,7 +51,7 @@ def milne(x0, y0, h, x_last, func, solution, eps, log=False):
         f.append(new_f)
 
         calculation_table.append([i, x, y_predicted, new_f, solution(x)])
-        x += h
+        x = round(x + h, 5)
         i += 1
 
     if log:
